@@ -13,10 +13,14 @@ public class AnswerService {
     private final AnswerRepository answerRepository;
 
     public void create(Question question, String content) {
-        Answer answer = new Answer();
-        answer.setContent(content);
-        answer.setCreateDate(LocalDateTime.now());
-        answer.setQuestion(question);
-        this.answerRepository.save(answer);
+        if (!content.isEmpty()) {
+            Answer answer = new Answer();
+            answer.setContent(content);
+            answer.setCreateDate(LocalDateTime.now());
+            answer.setQuestion(question);
+            this.answerRepository.save(answer);
+        } else {
+            // TODO : content is empty 에러 처리
+        }
     }
 }
