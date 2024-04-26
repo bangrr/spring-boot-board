@@ -5,6 +5,8 @@ import com.mysite.sbb.answer.AnswerRepository;
 import com.mysite.sbb.question.Question;
 import com.mysite.sbb.question.QuestionRepository;
 import com.mysite.sbb.question.QuestionService;
+import com.mysite.sbb.user.SiteUser;
+import com.mysite.sbb.user.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,6 +27,9 @@ class SbbApplicationTests {
 
     @Autowired
     private AnswerRepository answerRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private QuestionService questionService;
@@ -140,7 +145,15 @@ class SbbApplicationTests {
         for (int i = 1; i <= 300; i++) {
             String subject = String.format("테스트 데이터 입니다:[%03d]", i);
             String content = "내용무";
-            this.questionService.create(subject, content);
+            this.questionService.create(subject, content, null);
+        }
+    }
+
+    @Test
+    void findPasswordById() {
+        List<SiteUser> ul = this.userRepository.findAll();
+        for (SiteUser u : ul) {
+            System.out.println(u.getUsername() + " -=- " + u.getPassword());
         }
     }
 }
